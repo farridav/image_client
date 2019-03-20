@@ -1,4 +1,4 @@
-# Image Client
+# Image Client [![CircleCI](https://circleci.com/gh/farridav/image_client.svg?style=svg)](https://circleci.com/gh/farridav/image_client)
 
 A wrapper library around PIL for image manipulations
 
