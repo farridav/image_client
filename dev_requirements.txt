@@ -1,0 +1,10 @@
+-e .
+
+flake8==3.5.0
+ipdb==0.11
+ipython==7.0.1
+coverage==4.5.1
+pytest==3.9.1
+pytest-cov==2.6.0
+tox==3.5.2
+twine==1.12.1

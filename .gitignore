@@ -1,0 +1,15 @@
+*.pyc
+.idea/
+/__pycache__/
+*.egg*
+.pytest_cache
+/.venv
+.DS_Store
+_resource
+*~
+.coverage
+.tox
+dist/
+.pip-cache/
+.wheelhouse/
+build/
