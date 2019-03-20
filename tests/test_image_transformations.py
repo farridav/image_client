@@ -30,7 +30,7 @@ class TestImageTransformations:
         input_size = os.path.getsize(self.input_file)
         output_size = os.path.getsize(expected_output_file)
 
-        assert outputs == [os.path.basename(expected_output_file), os.path.basename(self.input_file)]
+        assert sorted(outputs) == sorted([os.path.basename(expected_output_file), os.path.basename(self.input_file)])
         assert input_size > output_size
 
     def test_rotate_image(self):
@@ -43,7 +43,7 @@ class TestImageTransformations:
         output_size = Image.open(expected_output_file).size
         outputs = os.listdir(self.tmp_dir)
 
-        assert outputs == [os.path.basename(expected_output_file), os.path.basename(self.input_file)]
+        assert sorted(outputs) == sorted([os.path.basename(expected_output_file), os.path.basename(self.input_file)])
         assert output_size == rotated_size
 
     def test_generate_thumbnail(self):
@@ -54,7 +54,7 @@ class TestImageTransformations:
 
         outputs = os.listdir(self.tmp_dir)
 
-        assert outputs == [os.path.basename(expected_output_file), os.path.basename(self.input_file)]
+        assert sorted(outputs) == sorted([os.path.basename(expected_output_file), os.path.basename(self.input_file)])
         assert Image.open(expected_output_file).size == thumbnail_size
 
     def test_filter_image(self):
