@@ -1,0 +1,59 @@
+---
+
+defaults: &defaults
+  working_directory: ~/image_transformations
+  docker:
+    - image: circleci/python:3.6.6
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    working_directory: ~/image_transformations
+    steps:
+      - checkout
+      - run:
+          command: |
+            python3 -m venv .venv
+            . .venv/bin/activate
+            pip install -U pip wheel twine -q
+            pip install -r dev_requirements.txt -q
+            python setup.py sdist bdist_wheel
+            twine check dist/*.tar.gz
+
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          command: |
+            python3 -m venv .venv
+            . .venv/bin/activate
+            pip install -r dev_requirements.txt -q
+            tox
+
+  deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          command: |
+            python3 -m venv .venv
+            . .venv/bin/activate
+            pip install -U pip wheel twine -q
+            pip install -r dev_requirements.txt -q
+            python setup.py sdist bdist_wheel
+            twine upload dist/*tar.gz --repository-url https://push.fury.io/shipit/ -u ${PIP_UPLOAD_TOKEN} -p "" --skip-existing
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - test:
+          requires: [build]
+      - deploy:
+          requires: [test]
+          filters:
+            branches:
+              only: master
